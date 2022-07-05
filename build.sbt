@@ -25,32 +25,39 @@ version := "1.0"
 // Want to use a published library in your project?
 // You can define other libraries as dependencies in your build like this:
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
+// libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
 
 // val circeVersion = "0.13.0"
-// val http4sVersion = "0.21.22"
+val circeVersion = "0.14.1"
+val http4sVersion = "0.21.22"
+// val catsVersion = "2.6.1"
+// val catsEffectVersion = "2.5.1"
+val catsVersion = "2.8.0"
+val catsEffectVersion = "2.5.5"
 
-// libraryDependencies ++= Seq(
-//   "io.circe" %% "circe-generic" % circeVersion,
-//   "io.circe" %% "circe-generic-extras" % circeVersion,
-//   "io.circe" %% "circe-parser" % circeVersion,
-//   "org.http4s" %% "http4s-blaze-server" % http4sVersion,
-//   "org.http4s" %% "http4s-circe" % http4sVersion,
-//   "org.http4s" %% "http4s-dsl" % http4sVersion,
-// )
+libraryDependencies ++= Seq(
+  "io.circe" %% "circe-generic" % circeVersion,
+  "io.circe" %% "circe-generic-extras" % circeVersion,
+  "io.circe" %% "circe-parser" % circeVersion,
+  "org.http4s" %% "http4s-blaze-server" % http4sVersion,
+  "org.http4s" %% "http4s-circe" % http4sVersion,
+  "org.http4s" %% "http4s-dsl" % http4sVersion,
+)
 
 // lazy val doobieVersion = "1.0.0-RC1"
 
-// libraryDependencies ++= Seq(
-//   "org.tpolecat" %% "doobie-core"     % doobieVersion,
-//   "org.tpolecat" %% "doobie-postgres" % doobieVersion,
-//   "org.tpolecat" %% "doobie-specs2"   % doobieVersion
-// )
+val doobieVersion = "0.13.4"
 
-// libraryDependencies ++= Seq(
-//   "org.typelevel" %% "cats-core" % "2.7.0",
-//   "org.typelevel" %% "cats-effect" % "2.5.5",
-// )
+libraryDependencies ++= Seq(
+  "org.tpolecat" %% "doobie-core"     % doobieVersion,
+  "org.tpolecat" %% "doobie-postgres" % doobieVersion,
+  "org.tpolecat" %% "doobie-specs2"   % doobieVersion
+)
+
+libraryDependencies ++= Seq(
+  "org.typelevel" %% "cats-core" % catsVersion,
+  "org.typelevel" %% "cats-effect" % catsEffectVersion,
+)
 
 
 
