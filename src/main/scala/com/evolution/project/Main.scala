@@ -49,12 +49,27 @@ object Main extends IOApp {
   //   IO(println("Hello from Main!")).as(ExitCode.Success)
   // }
 
-  override def run(args: List[String]): IO[ExitCode] =
-    BlazeServerBuilder[IO](ExecutionContext.global)
-      .bindHttp(port = 9001, host = "localhost")
-      .withHttpApp(httpApp)
-      .serve
-      .compile
-      .drain
-      .as(ExitCode.Success)
+  val program1 = 42.pure[ConnectionIO]
+
+  val xa = Transactor.fromDriverManager[IO](
+    "org.postgresql.Driver",     // driver classname
+    "jdbc:postgresql:testdb",     // connect URL (driver-specific)
+    "postgres",                  // user
+    "password"                           // password
+  )
+
+  val program2 = sql"select name from persons".query[String].to[List]
+
+  override def run(args: List[String]): IO[ExitCode] = for {
+    ourList <- program2.transact(xa)
+    _ <- IO(println(ourList.toString))
+  } yield ExitCode.Success
+  // override def run(args: List[String]): IO[ExitCode] =
+  //   BlazeServerBuilder[IO](ExecutionContext.global)
+  //     .bindHttp(port = 9001, host = "localhost")
+  //     .withHttpApp(httpApp)
+  //     .serve
+  //     .compile
+  //     .drain
+  //     .as(ExitCode.Success)
 }
