@@ -74,16 +74,16 @@ object Main extends IOApp {
   val secondName = "Nowak"
   val program6 = sql"UPDATE persons SET name = ${firstName + secondName} WHERE personid = 2".update.run
 
-  override def run(args: List[String]): IO[ExitCode] = for {
-    ourInt <- program6.transact(xa)
-    _ <- IO(println(ourInt.toString))
-  } yield ExitCode.Success
-  // override def run(args: List[String]): IO[ExitCode] =
-  //   BlazeServerBuilder[IO](ExecutionContext.global)
-  //     .bindHttp(port = 9001, host = "localhost")
-  //     .withHttpApp(httpApp)
-  //     .serve
-  //     .compile
-  //     .drain
-  //     .as(ExitCode.Success)
+  // override def run(args: List[String]): IO[ExitCode] = for {
+  //   ourInt <- program6.transact(xa)
+  //   _ <- IO(println(ourInt.toString))
+  // } yield ExitCode.Success
+  override def run(args: List[String]): IO[ExitCode] =
+    BlazeServerBuilder[IO](ExecutionContext.global)
+      .bindHttp(port = 9001, host = "localhost")
+      .withHttpApp(httpApp)
+      .serve
+      .compile
+      .drain
+      .as(ExitCode.Success)
 }
