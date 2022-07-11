@@ -58,11 +58,25 @@ object Main extends IOApp {
     "password"                           // password
   )
 
-  val program2 = sql"select name from persons".query[String].to[List]
+  val program2 = sql"SELECT name FROM persons".query[String].to[List]
+
+  val program3 = {
+    val id = 2
+    val name = "Piotr M"
+    sql"INSERT INTO persons (personid, name) values ($id, $name)".update.run
+  }
+
+  val program4 = sql"UPDATE persons SET name = 'Jerzy' WHERE personid = 2".update.run
+
+  val program5 = sql"SELECT * FROM persons".query[(Int, String)].to[List]
+
+  val firstName = "Jurek"
+  val secondName = "Nowak"
+  val program6 = sql"UPDATE persons SET name = ${firstName + secondName} WHERE personid = 2".update.run
 
   override def run(args: List[String]): IO[ExitCode] = for {
-    ourList <- program2.transact(xa)
-    _ <- IO(println(ourList.toString))
+    ourInt <- program6.transact(xa)
+    _ <- IO(println(ourInt.toString))
   } yield ExitCode.Success
   // override def run(args: List[String]): IO[ExitCode] =
   //   BlazeServerBuilder[IO](ExecutionContext.global)
